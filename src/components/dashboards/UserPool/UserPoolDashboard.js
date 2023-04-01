@@ -1,7 +1,7 @@
 import { Flex, VStack, HStack, Heading, Input } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import CyanButton from '../buttons/CyanButton'
-import BaseTable from '../tables/BaseTable'
+import CyanButton from '../../buttons/CyanButton'
+import BaseTable from '../../tables/BaseTable'
 import { useRouter } from 'next/router'
 import { ApiUserPoolList } from '@/apis/userpools/listuserpool'
 
@@ -40,7 +40,7 @@ const UserPoolDashboard = () => {
             />
           </HStack>
         </Flex>
-        <BaseTable 
+        <BaseTable
           onPageChange={(newPage) => setListRequest(prev => { return { ...prev, page: newPage }})}
           total={totalItems}
           pageSize={listRequest.pageSize}

@@ -1,13 +1,13 @@
 import { Flex, Heading, VStack } from '@chakra-ui/react'
 import React, {useState, useEffect} from 'react'
-import CyanButton from '../buttons/CyanButton'
+import CyanButton from '../../buttons/CyanButton'
 import { useRouter } from 'next/router'
-import BaseForm from '../forms/BaseForm'
+import BaseForm from '../../forms/BaseForm'
 import { BaseFormFieldType } from '@/utilities/constants'
-import DarkGrayButton from '../buttons/DarkGrayButton'
+import DarkGrayButton from '../../buttons/DarkGrayButton'
 import { ApiUserPoolGet } from '@/apis/userpools/getuserpool'
 import { ApiUserPoolUpdate } from '@/apis/userpools/updateuserpool'
-import TomatoButton from '../buttons/TomatoButton'
+import TomatoButton from '../../buttons/TomatoButton'
 import { ApiUserPoolDelete } from '@/apis/userpools/deleteuserpool'
 
 const UserPoolEditDashboard = () => {

@@ -1,9 +1,9 @@
 import { Flex, Heading, Text, VStack } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
-import CyanButton from '../buttons/CyanButton'
+import CyanButton from '../../buttons/CyanButton'
 import { ApiUserPoolListActive } from '@/apis/userpools/listactiveuserpool'
 
-const ClientLoginDashboard = () => {
+const PublicLoginDashboard = () => {
     const [userPools, setUserPools] = useState([])
 
     const redirectFunc = (page) => {
@@ -38,4 +38,4 @@ const ClientLoginDashboard = () => {
   )
 }
 
-export default ClientLoginDashboard
+export default PublicLoginDashboard

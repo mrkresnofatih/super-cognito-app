@@ -1,13 +1,13 @@
+import { ApiRoleCreate } from '@/apis/roles/createrole'
 import { Flex, Heading, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
-import BaseForm from '../forms/BaseForm'
+import React, {useState} from 'react'
+import DarkGrayButton from '../../buttons/DarkGrayButton'
+import CyanButton from '../../buttons/CyanButton'
+import BaseForm from '../../forms/BaseForm'
 import { BaseFormFieldType } from '@/utilities/constants'
-import CyanButton from '../buttons/CyanButton'
-import DarkGrayButton from '../buttons/DarkGrayButton'
-import { ApiPermissionCreate } from '@/apis/permissions/createpermission'
 
-const PermissionCreateDashboard = () => {
+const RoleCreateDashboard = () => {
     const router = useRouter()
     const [formData, setFormData] = useState({
       name: "",
@@ -16,7 +16,7 @@ const PermissionCreateDashboard = () => {
 
   return (
     <VStack align='left' margin='30px'>
-        <Heading as='h2' size='2xl' noOfLines={1} color='#0097B2'>Create Resource</Heading>
+        <Heading as='h2' size='2xl' noOfLines={1} color='#0097B2'>Create Role</Heading>
         <BaseForm
           fields={[
             {
@@ -34,7 +34,7 @@ const PermissionCreateDashboard = () => {
               onChangeValue: (val) => setFormData(prev => { return { ...prev, description: val } })
             }
           ]}
-          style={{marginTop: 24}} 
+          style={{marginTop: 24}}
         />
         <Flex justifyContent='end' style={{marginTop: 24}}>
             <CyanButton
@@ -42,21 +42,21 @@ const PermissionCreateDashboard = () => {
                 size='lg'
                 content='Save'
                 onClick={() => {
-                    ApiPermissionCreate(formData, (data) => {
-                        console.log(data)
-                        router.push("/permissions")
-                    })
+                ApiRoleCreate(formData, (data) => {
+                    console.log(data)
+                    router.push("/roles")
+                })
                 }}
             />
             <DarkGrayButton
                 style={{marginLeft: 18, width: 150}}
                 size='lg'
                 content='Cancel'
-                onClick={() => router.push('/permissions')}
+                onClick={() => router.push('/roles')}
             />
         </Flex>
     </VStack>
   )
 }
 
-export default PermissionCreateDashboard
+export default RoleCreateDashboard

@@ -1,4 +1,4 @@
-import ResourceCreateDashboard from '@/components/dashboards/ResourceCreateDashboard'
+import ResourceCreateDashboard from '@/components/dashboards/Resource/ResourceCreateDashboard'
 import SimpleHeader from '@/components/headers/SimpleHeader'
 import BaseHead from '@/components/heads/BaseHead'
 import React from 'react'

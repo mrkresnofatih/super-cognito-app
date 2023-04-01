@@ -1,4 +1,4 @@
-import PermissionCreateDashboard from '@/components/dashboards/PermissionCreateDashboard'
+import PermissionCreateDashboard from '@/components/dashboards/Permission/PermissionCreateDashboard'
 import SimpleHeader from '@/components/headers/SimpleHeader'
 import BaseHead from '@/components/heads/BaseHead'
 import React from 'react'

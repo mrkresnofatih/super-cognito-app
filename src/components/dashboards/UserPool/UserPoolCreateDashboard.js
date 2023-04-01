@@ -1,9 +1,9 @@
 import { Flex, Heading, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import BaseForm from '../forms/BaseForm'
+import BaseForm from '../../forms/BaseForm'
 import { BaseFormFieldType } from '@/utilities/constants'
-import CyanButton from '../buttons/CyanButton'
-import DarkGrayButton from '../buttons/DarkGrayButton'
+import CyanButton from '../../buttons/CyanButton'
+import DarkGrayButton from '../../buttons/DarkGrayButton'
 import { ApiUserPoolCreate } from '@/apis/userpools/createuserpool'
 import { useRouter } from 'next/router'
 

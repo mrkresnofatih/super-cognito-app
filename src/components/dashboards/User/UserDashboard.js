@@ -1,8 +1,8 @@
 import { Flex, HStack, Heading, Input, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, {useState, useEffect} from 'react'
-import CyanButton from '../buttons/CyanButton'
-import BaseTable from '../tables/BaseTable'
+import CyanButton from '../../buttons/CyanButton'
+import BaseTable from '../../tables/BaseTable'
 import { ApiUserList } from '@/apis/users/listuser'
 
 const UserDashboard = () => {
@@ -17,12 +17,12 @@ const UserDashboard = () => {
 
     useEffect(() => {
         ApiUserList(listRequest, (data) => {
-            setListData([...data.data.map(x => { 
+            setListData([...data.data.map(x => {
                 let dict = {}
                 Object.keys(x.userAttributes).forEach(element => {
                     dict[element] = x.userAttributes[element].value
                 });
-                return { ...x, ...dict } 
+                return { ...x, ...dict }
             })])
             setTotalItems(data.total)
         })
@@ -47,7 +47,7 @@ const UserDashboard = () => {
                 />
             </HStack>
         </Flex>
-        <BaseTable 
+        <BaseTable
             onPageChange={(newPage) => setListRequest(prev => { return { ...prev, page: newPage }})}
             total={totalItems}
             pageSize={listRequest.pageSize}

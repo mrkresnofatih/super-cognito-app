@@ -1,4 +1,4 @@
-import ClientCallbackDashboard from '@/components/dashboards/ClientCallbackDashboard'
+import PublicCallbackDashboard from '@/components/dashboards/Public/PublicCallbackDashboard'
 import BaseHead from '@/components/heads/BaseHead'
 import React from 'react'
 
@@ -7,7 +7,7 @@ const callback = () => {
     <>
         <BaseHead pageName='Callback' />
         <div>
-            <ClientCallbackDashboard/>
+            <PublicCallbackDashboard/>
         </div>
     </>
   )

@@ -1,4 +1,4 @@
-import RoleDashboard from '@/components/dashboards/RoleDashboard'
+import RoleDashboard from '@/components/dashboards/Role/RoleDashboard'
 import SimpleHeader from '@/components/headers/SimpleHeader'
 import BaseHead from '@/components/heads/BaseHead'
 import React from 'react'

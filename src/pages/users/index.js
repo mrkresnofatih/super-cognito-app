@@ -1,4 +1,4 @@
-import UserDashboard from '@/components/dashboards/UserDashboard'
+import UserDashboard from '@/components/dashboards/User/UserDashboard'
 import SimpleHeader from '@/components/headers/SimpleHeader'
 import BaseHead from '@/components/heads/BaseHead'
 import React from 'react'

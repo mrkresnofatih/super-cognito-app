@@ -3,7 +3,7 @@ import { Center, Flex, Heading, Spinner, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, {useEffect} from 'react'
 
-const ClientCallbackDashboard = () => {
+const PublicCallbackDashboard = () => {
   const router = useRouter()
 
   useEffect(() => {
@@ -30,4 +30,4 @@ const ClientCallbackDashboard = () => {
   )
 }
 
-export default ClientCallbackDashboard
+export default PublicCallbackDashboard

@@ -1,4 +1,4 @@
-import ClientLoginDashboard from '@/components/dashboards/ClientLoginDashboard'
+import PublicLoginDashboard from '@/components/dashboards/Public/PublicLoginDashboard'
 import BaseHead from '@/components/heads/BaseHead'
 import React from 'react'
 
@@ -7,7 +7,7 @@ const login = () => {
     <>
         <BaseHead pageName='Login' />
         <div>
-            <ClientLoginDashboard/>
+            <PublicLoginDashboard/>
         </div>
     </>
   )

@@ -1,4 +1,4 @@
-import UserPoolDashboard from '@/components/dashboards/UserPoolDashboard'
+import UserPoolDashboard from '@/components/dashboards/UserPool/UserPoolDashboard'
 import SimpleHeader from '@/components/headers/SimpleHeader'
 import BaseHead from '@/components/heads/BaseHead'
 import React from 'react'

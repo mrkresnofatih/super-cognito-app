@@ -1,13 +1,13 @@
 import { Flex, Heading, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import BaseForm from '../forms/BaseForm'
-import CyanButton from '../buttons/CyanButton'
-import DarkGrayButton from '../buttons/DarkGrayButton'
-import { ApiResourceCreate } from '@/apis/resources/createresource'
+import BaseForm from '../../forms/BaseForm'
 import { BaseFormFieldType } from '@/utilities/constants'
+import CyanButton from '../../buttons/CyanButton'
+import DarkGrayButton from '../../buttons/DarkGrayButton'
+import { ApiPermissionCreate } from '@/apis/permissions/createpermission'
 
-const ResourceCreateDashboard = () => {
+const PermissionCreateDashboard = () => {
     const router = useRouter()
     const [formData, setFormData] = useState({
       name: "",
@@ -34,7 +34,7 @@ const ResourceCreateDashboard = () => {
               onChangeValue: (val) => setFormData(prev => { return { ...prev, description: val } })
             }
           ]}
-          style={{marginTop: 24}} 
+          style={{marginTop: 24}}
         />
         <Flex justifyContent='end' style={{marginTop: 24}}>
             <CyanButton
@@ -42,9 +42,9 @@ const ResourceCreateDashboard = () => {
                 size='lg'
                 content='Save'
                 onClick={() => {
-                    ApiResourceCreate(formData, (data) => {
+                    ApiPermissionCreate(formData, (data) => {
                         console.log(data)
-                        router.push("/resources")
+                        router.push("/permissions")
                     })
                 }}
             />
@@ -52,11 +52,11 @@ const ResourceCreateDashboard = () => {
                 style={{marginLeft: 18, width: 150}}
                 size='lg'
                 content='Cancel'
-                onClick={() => router.push('/resources')}
+                onClick={() => router.push('/permissions')}
             />
         </Flex>
     </VStack>
   )
 }
 
-export default ResourceCreateDashboard
+export default PermissionCreateDashboard
