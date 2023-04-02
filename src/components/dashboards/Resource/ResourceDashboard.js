@@ -44,7 +44,7 @@ const ResourceDashboard = () => {
             total={totalItems}
             pageSize={listRequest.pageSize}
             page={listRequest.page}
-            onRowClick={(data) => router.push(`/resources/edit?resourcename=${data.name}`)}
+            onRowClick={(data) => router.push(`/resources/edit?resource-name=${data.name}`)}
             columns={[
             {
                 "title": "Id",

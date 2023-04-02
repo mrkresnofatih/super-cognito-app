@@ -44,7 +44,7 @@ const PermissionDashboard = () => {
             total={totalItems}
             pageSize={listRequest.pageSize}
             page={listRequest.page}
-            onRowClick={(data) => router.push(`/permissions/edit?permissionname=${data.name}`)}
+            onRowClick={(data) => router.push(`/permissions/edit?permission-name=${data.name}`)}
             columns={[
             {
                 "title": "Id",
