@@ -25,7 +25,7 @@ export function ClientDashboard() {
 
     return (
         <VStack align='left' margin='30px'>
-            <Heading as='h2' noOfLines={1} color='#0097B2'>Permissions</Heading>
+            <Heading as='h2' noOfLines={1} color='#0097B2'>Clients</Heading>
             <Flex justifyContent='space-between' style={{marginTop: 24}}>
                 <CyanButton
                     size='lg'
@@ -46,7 +46,7 @@ export function ClientDashboard() {
                 total={totalItems}
                 pageSize={listRequest.pageSize}
                 page={listRequest.page}
-                onRowClick={(data) => router.push(`/clients/edit?clientname=${data.name}`)}
+                onRowClick={(data) => router.push(`/clients/edit?client-name=${data.clientName}`)}
                 columns={[
                     {
                         "title": "Id",
