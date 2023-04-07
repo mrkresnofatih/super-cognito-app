@@ -16,7 +16,7 @@ const PermissionCreateDashboard = () => {
 
   return (
     <VStack align='left' margin='30px'>
-        <Heading as='h2' size='2xl' noOfLines={1} color='#0097B2'>Create Resource</Heading>
+        <Heading as='h2' size='2xl' noOfLines={1} color='#0097B2'>Create Permission</Heading>
         <BaseForm
           fields={[
             {
