@@ -2,10 +2,10 @@ import { Flex, Center, VStack, Text } from '@chakra-ui/react'
 import React from 'react'
 
 const BaseTable = ({
-    columns, 
-    datas, 
+    columns,
+    datas,
     pageSize,
-    total, 
+    total,
     page,
     onPageChange,
     onRowClick,
@@ -24,7 +24,7 @@ const BaseTable = ({
             <Flex key={id} justifyContent='space-between' style={{width: '100%', backgroundColor: id%2===0 ? '#0097B2': 'white'}}>
                 {columns.map((col, key) => (
                     <Center key={`${key}-${id}`} flex='1' h='75px' w='200px' onClick={() => onRowClick(data)} >
-                        <Text align='center'>{data[col.jsonKey].toString()}</Text>
+                        {data[col.jsonKey] ? <Text align='center'>{data[col.jsonKey].toString()}</Text> : (col.component ? col.component(data) : <></>)}
                     </Center>
                 ))}
             </Flex>

@@ -4,7 +4,7 @@ import {Flex, Heading, HStack, Input, VStack} from "@chakra-ui/react";
 import CyanButton from "@/components/buttons/CyanButton";
 import BaseTable from "@/components/tables/BaseTable";
 import {ApiRolePermissionList} from "@/apis/rolepermissions/listrolepermissions";
-import {ApiRolePermissionCreate} from "@/apis/rolepermissions/createrolepermission";
+import {ApiRolePermissionDelete} from "@/apis/rolepermissions/deleterolepermission";
 
 export const RolePermissionDashboard = () => {
     const router = useRouter()
@@ -27,7 +27,7 @@ export const RolePermissionDashboard = () => {
                 setTotalItems(data.total)
             })
         }
-    }, [listRequest, router.query["rolename"]])
+    }, [listRequest, router.query["rolename"], totalItems])
     return (
         <VStack align='left' margin='30px'>
             <Heading as='h2' size='2x1' noOfLines={1} color='#0097B2'>Attached Permissions</Heading>
@@ -52,12 +52,6 @@ export const RolePermissionDashboard = () => {
                 pageSize={listRequest.pageSize}
                 page={listRequest.page}
                 onRowClick={() => {
-                    ApiRolePermissionCreate({
-                        ...listRequest,
-                        roleName: router.query["rolename"]
-                    }, () => {
-                        router.push(`/roles/edit?rolename=${router.query["rolename"]}`)
-                    })
                 }}
                 columns={[
                     {
@@ -72,6 +66,20 @@ export const RolePermissionDashboard = () => {
                         "jsonKey": "description",
                         "title": "Description"
                     },
+                    {
+                        "title": "Actions",
+                        "component": (data) => {
+                            return (
+                                <div
+                                    style={{backgroundColor: "tomato", padding: "4px 8px"}}
+                                    onClick={() => ApiRolePermissionDelete(data, () => {
+                                        setListData(prev => { return [...prev.filter(x => !(x.roleName === data.roleName && x.permissionName === data.permissionName))]})
+                                        setTotalItems(prev => prev - 1)
+                                    })}
+                                >Delete</div>
+                            )
+                        }
+                    }
                 ]}
                 datas={listData}
                 style={{marginTop: 24}}

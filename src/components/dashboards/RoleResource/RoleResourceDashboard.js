@@ -1,17 +1,17 @@
 import * as React from 'react';
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import {ApiRolePermissionOptions} from "@/apis/rolepermissions/optionsrolepermission";
+import {ApiRoleResourceList} from "@/apis/roleresources/listroleresource";
 import {Flex, Heading, HStack, Input, VStack} from "@chakra-ui/react";
 import CyanButton from "@/components/buttons/CyanButton";
 import BaseTable from "@/components/tables/BaseTable";
-import {ApiRolePermissionCreate} from "@/apis/rolepermissions/createrolepermission";
+import {ApiRoleResourceDelete} from "@/apis/roleresources/deleteroleresource";
 
-export const RolePermissionCreateDashboard = () => {
+export const RoleResourceDashboard = () => {
     const router = useRouter()
     const [listRequest, setListRequest] = useState({
         roleName: "",
-        permissionName: "",
+        resourceName: "",
         pageSize: 10,
         page: 1
     })
@@ -20,7 +20,7 @@ export const RolePermissionCreateDashboard = () => {
 
     useEffect(() => {
         if (router.query["rolename"]) {
-            ApiRolePermissionOptions({
+            ApiRoleResourceList({
                 ...listRequest,
                 roleName: router.query["rolename"]
             }, (data) => {
@@ -28,15 +28,19 @@ export const RolePermissionCreateDashboard = () => {
                 setTotalItems(data.total)
             })
         }
-    }, [listRequest, router.query["rolename"]])
+    }, [listRequest, router.query["rolename"], totalItems])
 
     return (
         <VStack align='left' margin='30px'>
-            <Heading as='h2' size='2x1' noOfLines={1} color='#0097B2'>Attached Permissions</Heading>
+            <Heading as='h2' size='2x1' noOfLines={1} color='#0097B2'>Attached Resources</Heading>
             <Flex justifyContent='space-between' style={{marginTop: 24}}>
-                <div/>
+                <CyanButton
+                    size='lg'
+                    content='Create'
+                    onClick={() => router.push(`/role-resources/create?rolename=${router.query["rolename"]}`)}
+                />
                 <HStack>
-                    <Input placeholder='Search Attached Permissions' size='md' style={{padding: 12, width: 400}}/>
+                    <Input placeholder='Search Attached Resources' size='md' style={{padding: 12, width: 400}}/>
                     <CyanButton
                         size='lg'
                         content='Search'
@@ -49,8 +53,13 @@ export const RolePermissionCreateDashboard = () => {
                 total={totalItems}
                 pageSize={listRequest.pageSize}
                 page={listRequest.page}
-                onRowClick={() => {}}
+                onRowClick={() => {
+                }}
                 columns={[
+                    {
+                        "jsonKey": "roleName",
+                        "title": "RoleName",
+                    },
                     {
                         "jsonKey": "permissionName",
                         "title": "PermissionName"
@@ -65,13 +74,11 @@ export const RolePermissionCreateDashboard = () => {
                             return (
                                 <div
                                     style={{backgroundColor: "tomato", padding: "4px 8px"}}
-                                    onClick={() => ApiRolePermissionCreate({
-                                        permissionName: data.permissionName,
-                                        roleName: router.query["rolename"]
-                                    }, () => {
-                                        router.push(`/roles/edit?rolename=${router.query["rolename"]}`)
+                                    onClick={() => ApiRoleResourceDelete(data, () => {
+                                        setListData(prev => { return [...prev.filter(x => !(x.roleName === data.roleName && x.resourceName === data.resourceName))]})
+                                        setTotalItems(prev => prev - 1)
                                     })}
-                                >Add</div>
+                                >Delete</div>
                             )
                         }
                     }

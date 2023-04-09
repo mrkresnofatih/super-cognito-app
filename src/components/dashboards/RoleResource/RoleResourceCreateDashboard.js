@@ -1,17 +1,17 @@
 import * as React from 'react';
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import {ApiRolePermissionOptions} from "@/apis/rolepermissions/optionsrolepermission";
+import {ApiRoleResourceOptions} from "@/apis/roleresources/optionsroleresource";
 import {Flex, Heading, HStack, Input, VStack} from "@chakra-ui/react";
 import CyanButton from "@/components/buttons/CyanButton";
 import BaseTable from "@/components/tables/BaseTable";
-import {ApiRolePermissionCreate} from "@/apis/rolepermissions/createrolepermission";
+import {ApiRoleResourceCreate} from "@/apis/roleresources/createroleresources";
 
-export const RolePermissionCreateDashboard = () => {
+export const RoleResourceCreateDashboard = () => {
     const router = useRouter()
     const [listRequest, setListRequest] = useState({
         roleName: "",
-        permissionName: "",
+        resourceName: "",
         pageSize: 10,
         page: 1
     })
@@ -20,7 +20,7 @@ export const RolePermissionCreateDashboard = () => {
 
     useEffect(() => {
         if (router.query["rolename"]) {
-            ApiRolePermissionOptions({
+            ApiRoleResourceOptions({
                 ...listRequest,
                 roleName: router.query["rolename"]
             }, (data) => {
@@ -32,11 +32,11 @@ export const RolePermissionCreateDashboard = () => {
 
     return (
         <VStack align='left' margin='30px'>
-            <Heading as='h2' size='2x1' noOfLines={1} color='#0097B2'>Attached Permissions</Heading>
+            <Heading as='h2' size='2x1' noOfLines={1} color='#0097B2'>Unattached Resources</Heading>
             <Flex justifyContent='space-between' style={{marginTop: 24}}>
                 <div/>
                 <HStack>
-                    <Input placeholder='Search Attached Permissions' size='md' style={{padding: 12, width: 400}}/>
+                    <Input placeholder='Search Unattached Resources' size='md' style={{padding: 12, width: 400}}/>
                     <CyanButton
                         size='lg'
                         content='Search'
@@ -52,8 +52,8 @@ export const RolePermissionCreateDashboard = () => {
                 onRowClick={() => {}}
                 columns={[
                     {
-                        "jsonKey": "permissionName",
-                        "title": "PermissionName"
+                        "jsonKey": "resourceName",
+                        "title": "ResourceName"
                     },
                     {
                         "jsonKey": "description",
@@ -65,8 +65,8 @@ export const RolePermissionCreateDashboard = () => {
                             return (
                                 <div
                                     style={{backgroundColor: "tomato", padding: "4px 8px"}}
-                                    onClick={() => ApiRolePermissionCreate({
-                                        permissionName: data.permissionName,
+                                    onClick={() => ApiRoleResourceCreate({
+                                        resourceName: data.resourceName,
                                         roleName: router.query["rolename"]
                                     }, () => {
                                         router.push(`/roles/edit?rolename=${router.query["rolename"]}`)
