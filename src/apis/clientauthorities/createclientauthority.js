@@ -1,9 +1,9 @@
 import axios from "axios"
 
-export const ApiResourceCreate = (data, callback) => {
+export const ApiClientAuthorityCreate = (data, callback) => {
     axios({
         method: 'post',
-        url: 'http://localhost:5068/resource/create',
+        url: 'http://localhost:5068/client-authority/create',
         data: {
             ...data
         }
