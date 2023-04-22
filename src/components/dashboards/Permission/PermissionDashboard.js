@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import CyanButton from '../../buttons/CyanButton'
 import BaseTable from '../../tables/BaseTable'
 import { ApiPermissionList } from '@/apis/permissions/listpermission'
+import {useDebounce} from "use-debounce";
 
 const PermissionDashboard = () => {
     const router = useRouter()
@@ -12,15 +13,16 @@ const PermissionDashboard = () => {
         pageSize: 10,
         page: 1
       })
+    const [debouncedListRequest] = useDebounce(listRequest, 1000)
     const [listData, setListData] = useState([])
     const [totalItems, setTotalItems] = useState(0)
 
     useEffect(() => {
-        ApiPermissionList(listRequest, (data) => {
+        ApiPermissionList(debouncedListRequest, (data) => {
             setListData([...(data.data)])
             setTotalItems(data.total)
         })
-    }, [listRequest])
+    }, [debouncedListRequest])
   return (
     <VStack align='left' margin='30px'>
         <Heading as='h2' noOfLines={1} color='#0097B2'>Permissions</Heading>
@@ -31,11 +33,19 @@ const PermissionDashboard = () => {
                 onClick={() => router.push('/permissions/create')}
             />
             <HStack>
-                <Input placeholder='Search Permission Keywords' size='md' style={{padding: 12, width: 400}}/>
+                <Input
+                    placeholder='Search Permission Keywords'
+                    size='md'
+                    onChange={(e) => setListRequest({...listRequest, name: e.target.value})}
+                    style={{padding: 12, width: 400}}
+                />
                 <CyanButton
                     size='lg'
                     content='Search'
-                    onClick={() => console.log("hello world")}
+                    onClick={() => ApiPermissionList(debouncedListRequest, (data) => {
+                        setListData([...(data.data)])
+                        setTotalItems(data.total)
+                    })}
                 />
             </HStack>
         </Flex>

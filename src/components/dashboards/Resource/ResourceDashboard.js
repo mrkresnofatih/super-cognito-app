@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import CyanButton from '../../buttons/CyanButton'
 import BaseTable from '../../tables/BaseTable'
 import { ApiResourceList } from '@/apis/resources/listresource'
+import {useDebounce} from "use-debounce";
 
 const ResourceDashboard = () => {
     const router = useRouter()
@@ -12,15 +13,16 @@ const ResourceDashboard = () => {
         pageSize: 10,
         page: 1
       })
+    const [debouncedListRequest] = useDebounce(listRequest, 1000)
     const [listData, setListData] = useState([])
     const [totalItems, setTotalItems] = useState(0)
 
     useEffect(() => {
-        ApiResourceList(listRequest, (data) => {
+        ApiResourceList(debouncedListRequest, (data) => {
             setListData([...(data.data)])
             setTotalItems(data.total)
         })
-    }, [listRequest])
+    }, [debouncedListRequest])
   return (
     <VStack align='left' margin='30px'>
         <Heading as='h2' noOfLines={1} color='#0097B2'>Resources</Heading>
@@ -31,11 +33,19 @@ const ResourceDashboard = () => {
                 onClick={() => router.push('/resources/create')}
             />
             <HStack>
-                <Input placeholder='Search Resources Keywords' size='md' style={{padding: 12, width: 400}}/>
+                <Input
+                    placeholder='Search Resources Keywords'
+                    size='md'
+                    style={{padding: 12, width: 400}}
+                    onChange={e => setListRequest({...listRequest, name: e.target.value})}
+                />
                 <CyanButton
                     size='lg'
                     content='Search'
-                    onClick={() => console.log("hello world")}
+                    onClick={() => ApiResourceList(debouncedListRequest, (data) => {
+                        setListData([...(data.data)])
+                        setTotalItems(data.total)
+                    })}
                 />
             </HStack>
         </Flex>

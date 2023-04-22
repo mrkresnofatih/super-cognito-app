@@ -5,6 +5,7 @@ import {Flex, Heading, HStack, Input, VStack} from "@chakra-ui/react";
 import CyanButton from "@/components/buttons/CyanButton";
 import BaseTable from "@/components/tables/BaseTable";
 import {ApiClientList} from "@/apis/clients/listclients";
+import {useDebounce} from "use-debounce";
 
 export function ClientDashboard() {
     const router = useRouter()
@@ -13,15 +14,16 @@ export function ClientDashboard() {
         pageSize: 10,
         page: 1
     })
+    const [debouncedListRequest] = useDebounce(listRequest, 1000)
     const [listData, setListData] = useState([])
     const [totalItems, setTotalItems] = useState(0)
 
     useEffect(() => {
-        ApiClientList(listRequest, (data) => {
+        ApiClientList(debouncedListRequest, (data) => {
             setListData([...(data.data)])
             setTotalItems(data.total)
         })
-    }, [listRequest])
+    }, [debouncedListRequest])
 
     return (
         <VStack align='left' margin='30px'>
@@ -33,11 +35,19 @@ export function ClientDashboard() {
                     onClick={() => router.push('/clients/create')}
                 />
                 <HStack>
-                    <Input placeholder='Search by Client Name' size='md' style={{padding: 12, width: 400}}/>
+                    <Input
+                        placeholder='Search by Client Name'
+                        size='md'
+                        style={{padding: 12, width: 400}}
+                        onChange={e => setListRequest({...listRequest, name: e.target.value})}
+                    />
                     <CyanButton
                         size='lg'
                         content='Search'
-                        onClick={() => console.log("hello world")}
+                        onClick={() => ApiClientList(debouncedListRequest, (data) => {
+                            setListData([...(data.data)])
+                            setTotalItems(data.total)
+                        })}
                     />
                 </HStack>
             </Flex>

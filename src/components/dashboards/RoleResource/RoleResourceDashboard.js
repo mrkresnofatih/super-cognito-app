@@ -6,6 +6,7 @@ import {Flex, Heading, HStack, Input, VStack} from "@chakra-ui/react";
 import CyanButton from "@/components/buttons/CyanButton";
 import BaseTable from "@/components/tables/BaseTable";
 import {ApiRoleResourceDelete} from "@/apis/roleresources/deleteroleresource";
+import {useDebounce} from "use-debounce";
 
 export const RoleResourceDashboard = () => {
     const router = useRouter()
@@ -15,20 +16,21 @@ export const RoleResourceDashboard = () => {
         pageSize: 10,
         page: 1
     })
+    const [debouncedListRequest] = useDebounce(listRequest, 1000)
     const [listData, setListData] = useState([])
     const [totalItems, setTotalItems] = useState(0)
 
     useEffect(() => {
         if (router.query["rolename"]) {
             ApiRoleResourceList({
-                ...listRequest,
+                ...debouncedListRequest,
                 roleName: router.query["rolename"]
             }, (data) => {
                 setListData([...data.data])
                 setTotalItems(data.total)
             })
         }
-    }, [listRequest, router.query["rolename"], totalItems])
+    }, [debouncedListRequest, router.query["rolename"], totalItems])
 
     return (
         <VStack align='left' margin='30px'>
@@ -40,11 +42,22 @@ export const RoleResourceDashboard = () => {
                     onClick={() => router.push(`/role-resources/create?rolename=${router.query["rolename"]}`)}
                 />
                 <HStack>
-                    <Input placeholder='Search Attached Resources' size='md' style={{padding: 12, width: 400}}/>
+                    <Input
+                        placeholder='Search Attached Resources'
+                        size='md'
+                        style={{padding: 12, width: 400}}
+                        onChange={e => setListRequest({...listRequest, resourceName: e.target.value})}
+                    />
                     <CyanButton
                         size='lg'
                         content='Search'
-                        onClick={() => console.log("hello world")}
+                        onClick={() => ApiRoleResourceList({
+                            ...debouncedListRequest,
+                            roleName: router.query["rolename"]
+                        }, (data) => {
+                            setListData([...data.data])
+                            setTotalItems(data.total)
+                        })}
                     />
                 </HStack>
             </Flex>
@@ -61,8 +74,8 @@ export const RoleResourceDashboard = () => {
                         "title": "RoleName",
                     },
                     {
-                        "jsonKey": "permissionName",
-                        "title": "PermissionName"
+                        "jsonKey": "resourceName",
+                        "title": "ResourceName"
                     },
                     {
                         "jsonKey": "description",

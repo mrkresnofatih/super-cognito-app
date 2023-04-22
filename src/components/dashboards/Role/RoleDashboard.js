@@ -4,6 +4,7 @@ import CyanButton from '../../buttons/CyanButton'
 import { useRouter } from 'next/router'
 import BaseTable from '../../tables/BaseTable'
 import { ApiRoleList } from '@/apis/roles/listrole'
+import {useDebounce} from "use-debounce";
 
 const RoleDashboard = () => {
     const router = useRouter()
@@ -12,15 +13,16 @@ const RoleDashboard = () => {
         pageSize: 10,
         page: 1
       })
+    const [debouncedListRequest] = useDebounce(listRequest, 1000)
     const [listData, setListData] = useState([])
     const [totalItems, setTotalItems] = useState(0)
 
     useEffect(() => {
-        ApiRoleList(listRequest, (data) => {
+        ApiRoleList(debouncedListRequest, (data) => {
             setListData([...data.data])
             setTotalItems(data.total)
         })
-    }, [listRequest])
+    }, [debouncedListRequest])
 
 
   return (
@@ -33,11 +35,19 @@ const RoleDashboard = () => {
                 onClick={() => router.push('/roles/create')}
             />
             <HStack>
-                <Input placeholder='Search Roles Keywords' size='md' style={{padding: 12, width: 400}}/>
+                <Input
+                    placeholder='Search Roles Keywords'
+                    size='md'
+                    style={{padding: 12, width: 400}}
+                    onChange={(e) => setListRequest({...listRequest, name: e.target.value})}
+                />
                 <CyanButton
                     size='lg'
                     content='Search'
-                    onClick={() => console.log("hello world")}
+                    onClick={() => ApiRoleList(listRequest, (data) => {
+                        setListData([...data.data])
+                        setTotalItems(data.total)
+                    })}
                 />
             </HStack>
         </Flex>

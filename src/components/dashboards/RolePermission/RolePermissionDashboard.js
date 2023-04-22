@@ -5,6 +5,7 @@ import CyanButton from "@/components/buttons/CyanButton";
 import BaseTable from "@/components/tables/BaseTable";
 import {ApiRolePermissionList} from "@/apis/rolepermissions/listrolepermissions";
 import {ApiRolePermissionDelete} from "@/apis/rolepermissions/deleterolepermission";
+import {useDebounce} from "use-debounce";
 
 export const RolePermissionDashboard = () => {
     const router = useRouter()
@@ -14,20 +15,21 @@ export const RolePermissionDashboard = () => {
         pageSize: 10,
         page: 1
     })
+    const [debouncedListRequest] = useDebounce(listRequest, 1000)
     const [listData, setListData] = useState([])
     const [totalItems, setTotalItems] = useState(0)
 
     useEffect(() => {
         if (router.query["rolename"]) {
             ApiRolePermissionList({
-                ...listRequest,
+                ...debouncedListRequest,
                 roleName: router.query["rolename"]
             }, (data) => {
                 setListData([...data.data])
                 setTotalItems(data.total)
             })
         }
-    }, [listRequest, router.query["rolename"], totalItems])
+    }, [debouncedListRequest, router.query["rolename"], totalItems])
     return (
         <VStack align='left' margin='30px'>
             <Heading as='h2' size='2x1' noOfLines={1} color='#0097B2'>Attached Permissions</Heading>
@@ -38,11 +40,22 @@ export const RolePermissionDashboard = () => {
                     onClick={() => router.push(`/role-permissions/create?rolename=${router.query["rolename"]}`)}
                 />
                 <HStack>
-                    <Input placeholder='Search Attached Permissions' size='md' style={{padding: 12, width: 400}}/>
+                    <Input
+                        placeholder='Search Attached Permissions'
+                        size='md'
+                        style={{padding: 12, width: 400}}
+                        onChange={e => setListRequest({...listRequest, permissionName: e.target.value})}
+                    />
                     <CyanButton
                         size='lg'
                         content='Search'
-                        onClick={() => console.log("hello world")}
+                        onClick={() => ApiRolePermissionList({
+                            ...debouncedListRequest,
+                            roleName: router.query["rolename"]
+                        }, (data) => {
+                            setListData([...data.data])
+                            setTotalItems(data.total)
+                        })}
                     />
                 </HStack>
             </Flex>
