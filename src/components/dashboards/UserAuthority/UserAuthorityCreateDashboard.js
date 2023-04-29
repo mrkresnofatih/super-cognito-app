@@ -6,25 +6,24 @@ import BaseForm from "@/components/forms/BaseForm";
 import {BaseFormFieldType} from "@/utilities/constants";
 import CyanButton from "@/components/buttons/CyanButton";
 import DarkGrayButton from "@/components/buttons/DarkGrayButton";
-import {ApiClientAuthorityCreate} from "@/apis/clientauthorities/createclientauthority";
+import {ApiUserAuthorityCreate} from "@/apis/userauthorities/createuserauthority";
 
-export const ClientAuthorityCreateDashboard = () => {
+export const UserAuthorityCreateDashboard = () => {
     const router = useRouter()
     const [formData, setFormData] = useState({
         roleName: "",
         resourceName: ""
     })
-
     return (
         <VStack align='left' margin='30px'>
-            <Heading as='h2' size='2xl' noOfLines={1} color='#0097B2'>Create Client Authority</Heading>
+            <Heading as='h2' size='2xl' noOfLines={1} color='#0097B2'>Create User Authority</Heading>
             <BaseForm
                 fields={[
                     {
-                        fieldName: "ClientName",
+                        fieldName: "PrincipalName",
                         type: BaseFormFieldType.StringField,
                         fieldPlaceHolder: "Any Existing Client Name",
-                        fieldValue: router.query["client-name"],
+                        fieldValue: router.query["principalname"],
                         disabled: true
                     },
                     {
@@ -50,12 +49,12 @@ export const ClientAuthorityCreateDashboard = () => {
                     size='lg'
                     content='Add'
                     onClick={() => {
-                        ApiClientAuthorityCreate({
-                            clientName: router.query["client-name"],
+                        ApiUserAuthorityCreate({
+                            principalName: router.query["principalname"],
                             roleResourceId: formData.roleName + "-" + formData.resourceName
                         }, (data) => {
                             console.log(data)
-                            router.push(`/clients/edit?client-name=${router.query["client-name"]}`)
+                            router.push(`/users/edit?principalname=${router.query["principalname"]}`)
                         })
                     }}
                 />
@@ -63,7 +62,7 @@ export const ClientAuthorityCreateDashboard = () => {
                     style={{marginLeft: 18, width: 150}}
                     size='lg'
                     content='Cancel'
-                    onClick={() => router.push(`/clients/edit?client-name=${router.query["client-name"]}`)}
+                    onClick={() => router.push(`/users/edit?principalname=${router.query["principalname"]}`)}
                 />
             </Flex>
         </VStack>

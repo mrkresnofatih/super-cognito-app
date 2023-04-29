@@ -84,6 +84,7 @@ const UserPoolEditDashboard = () => {
                   type: BaseFormFieldType.StringField,
                   fieldPlaceHolder: "LoginPageURL Path",
                   fieldValue: formData['loginPageUrl'],
+                    fieldHeight: 150,
                   onChangeValue: (val) => setFormData(prev => { return { ...prev, loginPageUrl: val } })
                 },
                 {
@@ -149,6 +150,7 @@ const UserPoolEditDashboard = () => {
                     type: BaseFormFieldType.StringField,
                     fieldPlaceHolder: "RedirectUri of your main application",
                     fieldValue: formData['redirectUri'],
+                    fieldHeight: 60,
                     onChangeValue: (val) => setFormData(prev => { return { ...prev, redirectUri: val } })
                 },
                 {
