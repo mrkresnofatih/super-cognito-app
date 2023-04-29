@@ -1,12 +1,12 @@
 import axios from "axios"
 
-export const ApiAuthLogin = (data, callback) => {
+export const ApiAuthUserToken = (data, callback) => {
     axios({
         method: 'post',
-        url: 'http://localhost:5068/auth/login',
+        url: 'http://localhost:5068/auth/user-token',
         data: {
             "userPoolId": data.userPoolId,
-            "authorizationCode": data.authorizationCode
+            "code": data.code
         }
     }).then((response) => {
         console.log(response);

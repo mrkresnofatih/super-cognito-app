@@ -26,7 +26,9 @@ const UserPoolEditDashboard = () => {
         enabled: false,
         useCache: false,
         tokenLifeTime: 10,
-        principalNameKey: ""
+        principalNameKey: "",
+        redirectUri: "",
+        applicationCallbackUrl: "",
       })
 
     useEffect(() => {
@@ -141,6 +143,20 @@ const UserPoolEditDashboard = () => {
                   fieldPlaceHolder: "PrincipalNameKey For User Mapping",
                   fieldValue: formData['principalNameKey'],
                   onChangeValue: (val) => setFormData(prev => { return { ...prev, principalNameKey: val } })
+                },
+                {
+                    fieldName: "redirectUri",
+                    type: BaseFormFieldType.StringField,
+                    fieldPlaceHolder: "RedirectUri of your main application",
+                    fieldValue: formData['redirectUri'],
+                    onChangeValue: (val) => setFormData(prev => { return { ...prev, redirectUri: val } })
+                },
+                {
+                    fieldName: "applicationCallbackUrl",
+                    type: BaseFormFieldType.StringField,
+                    fieldPlaceHolder: "ApplicationCallbackUrl of your main application",
+                    fieldValue: formData['applicationCallbackUrl'],
+                    onChangeValue: (val) => setFormData(prev => { return { ...prev, applicationCallbackUrl: val } })
                 },
               ]}
               style={{marginTop: 24}}

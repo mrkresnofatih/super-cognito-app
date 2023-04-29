@@ -1,4 +1,4 @@
-import { ApiAuthLogin } from '@/apis/auth/login'
+import { ApiAuthUserToken } from '@/apis/auth/usertoken'
 import { Center, Flex, Heading, Spinner, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, {useEffect} from 'react'
@@ -8,9 +8,9 @@ const PublicCallbackDashboard = () => {
 
   useEffect(() => {
     if (router.query.userpoolid && router.query.code) {
-      ApiAuthLogin({
+      ApiAuthUserToken({
         userPoolId: router.query.userpoolid,
-        authorizationCode: router.query.code
+        code: router.query.code
       }, (data) => {
         console.log(data)
       })

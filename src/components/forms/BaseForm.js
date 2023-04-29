@@ -12,21 +12,22 @@ const BaseForm = ({fields, style}) => {
             switch (field.type) {
                 case BaseFormFieldType.StringField:
                     return (
-                        <StringFieldForm 
+                        <StringFieldForm
                             key={id}
-                            fieldName={field.fieldName} 
-                            fieldPlaceHolder={field.fieldPlaceHolder} 
-                            fieldValue={field.fieldValue} 
+                            fieldName={field.fieldName}
+                            fieldPlaceHolder={field.fieldPlaceHolder}
+                            fieldValue={field.fieldValue}
                             onChangeValue={field.onChangeValue}
                             disabled={field.disabled}
+                            fieldHeight={field.fieldHeight}
                         />
                     )
                 case BaseFormFieldType.NumberField:
                     return (
                         <NumberFieldForm
                             key={id}
-                            fieldName={field.fieldName} 
-                            fieldValue={field.fieldValue} 
+                            fieldName={field.fieldName}
+                            fieldValue={field.fieldValue}
                             onChangeValue={field.onChangeValue}
                             disabled={field.disabled}
                         />
@@ -35,11 +36,11 @@ const BaseForm = ({fields, style}) => {
                     return (
                         <BooleanFieldForm
                             key={id}
-                            fieldName={field.fieldName} 
-                            fieldValue={field.fieldValue} 
+                            fieldName={field.fieldName}
+                            fieldValue={field.fieldValue}
                             onChangeValue={field.onChangeValue}
                             disabled={field.disabled}
-                        />   
+                        />
                     )
                 default:
                     return <></>

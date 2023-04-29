@@ -52,7 +52,7 @@ const UserDashboard = () => {
             total={totalItems}
             pageSize={listRequest.pageSize}
             page={listRequest.page}
-            onRowClick={(data) => router.push(`/users/edit?principalname=${data.id}`)}
+            onRowClick={(data) => router.push(`/users/edit?principalname=${data.principalName}`)}
             columns={[
                 {
                 "title": "Id",
@@ -61,14 +61,6 @@ const UserDashboard = () => {
                 {
                 "jsonKey": "principalName",
                 "title": "PrincipalName"
-                },
-                {
-                "jsonKey": "email",
-                "title": "Email"
-                },
-                {
-                "jsonKey": "sub",
-                "title": "Sub"
                 },
             ]}
             datas={listData}
